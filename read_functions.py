@@ -168,7 +168,15 @@ def mean_imputation(train_data, miss_mask, types_dict):
             ind_end = ind_ini + 1
             #The imputation is based on whatever is observed
             miss_pattern = (miss_mask[:,dd]==1)
+            #print(train_data[:, ind_ini:ind_end])
+            #print(np.unique(train_data[:, ind_ini:ind_end]))
+            #print(train_data[miss_pattern,ind_ini:ind_end])
             values, counts = np.unique(train_data[miss_pattern,ind_ini:ind_end],return_counts=True)
+            if (len(values) == 0):
+                col_data = train_data[:, ind_ini:ind_end]
+                values = np.unique(col_data)
+                counts = len(col_data)
+
             print(values, counts, dd, miss_pattern)
             data_mode = np.argmax(counts)
             data_imputed = train_data[:,ind_ini:ind_end]*miss_mask[:,ind_ini:ind_end] + data_mode*(1.0-miss_mask[:,ind_ini:ind_end])
