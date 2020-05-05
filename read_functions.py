@@ -191,7 +191,7 @@ def mean_imputation(train_data, miss_mask, types_dict):
                 values = np.unique(col_data)
                 counts = len(col_data)
 
-            print(values, counts, dd, miss_pattern)
+            # print(values, counts, dd, miss_pattern)
             data_mode = np.argmax(counts)
             data_imputed = train_data[:, ind_ini:ind_end]*miss_mask[:,
                                                                     ind_ini:ind_end] + data_mode*(1.0-miss_mask[:, ind_ini:ind_end])
@@ -319,7 +319,7 @@ def error_computation(x_train, x_hat, types_dict, miss_mask):
             norm_term = np.max(x_train[:, dd]) - np.min(x_train[:, dd])
             a, b = x_train[miss_mask[:, dd] == 1,
                            ind_ini:ind_end], x_hat[miss_mask[:, dd] == 1, ind_ini:ind_end]
-            print(a, b)
+            # print(a, b)
             if(len(a) == 0 or len(b) == 0):
                 error_observed.append(0)
             else:

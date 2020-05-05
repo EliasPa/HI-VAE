@@ -27,7 +27,7 @@ print("Ratio of deaths/survival in training data",
 # Default values
 N = 8000
 N_variables = 40
-test_train_split = 0.50
+test_train_split = 50
 
 if(len(sys.argv) == 4):
     N_variables = int(sys.argv[1])
@@ -45,7 +45,7 @@ else:
 print('-'*40)
 print('Number of variables used: {}'.format(N_variables))
 print('Sample size per class used: {}'.format(N))
-print('Test-train- split: {}'.format(test_train_split))
+print('Test-train- split: {} %'.format(test_train_split))
 print('-'*40)
 
 
@@ -53,7 +53,7 @@ death = training_data[training_data['hospital_death'] == 1]
 survive = training_data[training_data['hospital_death'] == 0]
 
 data_folder = './ICU/dataset_{}_vars/{}_N_{}_split'.format(
-    N_variables, N, int(test_train_split * 100))
+    N_variables, N, int(test_train_split))
 
 try:
     os.mkdir(data_folder)
@@ -70,9 +70,10 @@ print('Shape of the training data')
 print(training_data.shape)
 print('-'*40)
 # training_data = training_data.iloc[N:, :N_variables]
-
+data_split = test_train_split / 100.0
+print(data_split)
 training_data, test_data = train_test_split(
-    training_data, test_size=test_train_split, stratify=training_data['hospital_death'])
+    training_data, test_size=data_split, stratify=training_data['hospital_death'])
 
 test_data = test_data.iloc[:, :N_variables]
 
@@ -180,7 +181,7 @@ test_data = test_data.reindex(sorted(test_data.columns), axis=1)
 test_mask, test_data = createMaskCSV(test_data)
 
 test_mask_path = '{}/test_Missingxx_y.csv'.format(data_folder)
-test_mask.to_csv(test_mask_path, index=False, header=True)
+test_mask.to_csv(test_mask_path, index=False, header=False)
 
 test_data_preprocessed_path = '{}/test_data_preprocessed.csv'.format(
     data_folder)
