@@ -55,7 +55,7 @@ test_model(){
 }
 
 evaluate_model(){
-    python results_validation.py $1 $2
+    python results_validation.py $1 $2 $3
 }
 
 
@@ -85,7 +85,7 @@ do
                 save_file=${model}_${dataset}_${n_variables}_vars_z${z}_y${y}_s${s}_batch${batch_size}_epochs${e}
                 train_model ${model} ${z} ${y} ${s} ${e}
                 test_model ${model} ${z} ${y} ${s}
-                evaluate_model ${save_file} ${data_path}/${n_sample}_N_${split}_split/test_target.csv
+                evaluate_model ${save_file} ${data_path}/${n_sample}_N_${split}_split/test_target.csv ${n_variables}
                 echo ${save_file}
             done
         done
