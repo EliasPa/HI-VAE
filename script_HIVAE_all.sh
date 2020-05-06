@@ -13,6 +13,10 @@ generate_training_and_test_data(){
     python data_preprocessing.py ${n_variables} ${n_sample} ${split}
 }
 
+write_results(){
+    python construct_results.py ${n_variables} ${n_sample} ${split}
+}
+
 # Generate data_types-file
 generate_data_types
 # Generate training and test-data
@@ -91,5 +95,10 @@ do
         done
     done
 done
-#train_model ${model} ${z_dim} ${y_dim} ${s_dim}
-#test_model ${model} ${z_dim} ${y_dim} ${s_dim}
+
+echo "Done with training and testing all models."
+echo "Writing test results.."
+
+write_results
+
+echo "Test results ready."
